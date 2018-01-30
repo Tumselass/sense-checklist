@@ -92,7 +92,7 @@ const view = {
     return deleteButton;
   },
   createCompleteButton: function() {
-    
+     
   },
   eventListeners: function() {
     document.querySelector('ul').addEventListener('click', (e) => {
