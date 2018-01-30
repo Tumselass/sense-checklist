@@ -91,6 +91,9 @@ const view = {
     deleteButton.classList.add('delete-button');                                 
     return deleteButton;
   },
+  createCompleteButton: function() {
+    
+  },
   eventListeners: function() {
     document.querySelector('ul').addEventListener('click', (e) => {
       let clickedElement = e.target;
