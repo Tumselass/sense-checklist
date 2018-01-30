@@ -59,10 +59,8 @@ const handlers = {
     todoList.deleteTodo(position);
     view.displayTodos();
   },
-  toggleCompleted : function() {
-    let toggleCompletedPositionInput = document.getElementById('toggle-completed-cosition-input');
-    todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
-    toggleCompletedPositionInput.value = '';
+  toggleCompleted : function(position) {
+    todoList.toggleCompleted(position);
     view.displayTodos();
   }
 };
@@ -82,6 +80,7 @@ const view = {
       todoLi.id = index;
       todoLi.textContent = todoTextWithCompletion;
       todoLi.appendChild(this.createDeleteButton());
+      todoLi.appendChild(this.createCompleteButton());
       todoUl.appendChild(todoLi);
     });
   },
@@ -92,13 +91,19 @@ const view = {
     return deleteButton;
   },
   createCompleteButton: function() {
-     
+     const completeButton = document.createElement('button');
+     completeButton.innerText = 'X'
+     completeButton.classList.add('complete-button');
+     return completeButton;
   },
   eventListeners: function() {
     document.querySelector('ul').addEventListener('click', (e) => {
       let clickedElement = e.target;
       if (clickedElement.className === 'delete-button') {
         handlers.deleteTodo(parseInt(clickedElement.parentNode.id));
+      }
+      if (clickedElement.className === 'complete-button') {
+        handlers.toggleCompleted(parseInt(clickedElement.parentNode.id));
       }
     });
   }
