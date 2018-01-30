@@ -47,12 +47,8 @@ const handlers = {
     addTodoTextInput.value = '';
     view.displayTodos();
   },
-  changeTodo: function() {
-    let changeTodoPositionInput = document.getElementById('change-todo-position-input');
-    let changeTodoTextInput = document.getElementById('change-todo-text-input');
-    todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
-    changeTodoPositionInput.value = '';
-    changeTodoTextInput.value = '';
+  changeTodo: function(position, todoText) {
+    todoList.changeTodo(position, todoText);
     view.displayTodos();
   },
   deleteTodo: function(position) {
@@ -71,16 +67,18 @@ const view = {
     todoUl.innerHTML = '';
     todoList.todos.forEach((todo, index) => {
       let todoLi = document.createElement('li');
-      let todoTextWithCompletion = '';
+      let todoSpan = document.createElement('span');
+      todoSpan.classList.add('todo-text');
+      todoSpan.setAttribute('contenteditable', 'true');
       if (todo.completed) {
-        todoTextWithCompletion = `(x) ${todo.todoText}`;
+        todoLi.appendChild(this.createCompleteButton('X'));
       } else {
-        todoTextWithCompletion = `( ) ${todo.todoText}`;
+        todoLi.appendChild(this.createCompleteButton('-'));
       }
       todoLi.id = index;
-      todoLi.textContent = todoTextWithCompletion;
+      todoSpan.textContent = todo.todoText;
+      todoLi.appendChild(todoSpan);
       todoLi.appendChild(this.createDeleteButton());
-      todoLi.appendChild(this.createCompleteButton());
       todoUl.appendChild(todoLi);
     });
   },
@@ -90,15 +88,16 @@ const view = {
     deleteButton.classList.add('delete-button');                                 
     return deleteButton;
   },
-  createCompleteButton: function() {
+  createCompleteButton: function(complete) {
      const completeButton = document.createElement('button');
-     completeButton.innerText = 'X'
+     completeButton.innerText = complete
      completeButton.classList.add('complete-button');
      return completeButton;
   },
   eventListeners: function() {
-    document.querySelector('ul').addEventListener('click', (e) => {
-      let clickedElement = e.target;
+    const eventUl = document.querySelector('ul');
+    eventUl.addEventListener('click', (e) => {
+      const clickedElement = e.target;
       if (clickedElement.className === 'delete-button') {
         handlers.deleteTodo(parseInt(clickedElement.parentNode.id));
       }
@@ -106,6 +105,19 @@ const view = {
         handlers.toggleCompleted(parseInt(clickedElement.parentNode.id));
       }
     });
+
+    eventUl.addEventListener('blur', (e) => {
+      const bluredElement = e.target;
+      if (bluredElement.className === 'todo-text') {
+        const newTodoText = bluredElement.textContent;
+        const bluredPosition = parseInt(bluredElement.parentNode.id);
+        if (newTodoText === todoList.todos[bluredPosition].todoText) {
+          return;
+        } else {
+        handlers.changeTodo(bluredPosition, newTodoText);
+        }
+      }
+    }, true);
   }
 };
 
