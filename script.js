@@ -43,6 +43,7 @@ const handlers = {
   },
   addTodo: function() {
     let addTodoTextInput = document.getElementById('add-todo-text-input');
+    if (addTodoTextInput.value === '') {return};
     todoList.addTodo(addTodoTextInput.value);
     addTodoTextInput.value = '';
     view.displayTodos();
@@ -95,6 +96,7 @@ const view = {
      return completeButton;
   },
   eventListeners: function() {
+    // adding events to delete and completed button
     const eventUl = document.querySelector('ul');
     eventUl.addEventListener('click', (e) => {
       const clickedElement = e.target;
@@ -105,7 +107,7 @@ const view = {
         handlers.toggleCompleted(parseInt(clickedElement.parentNode.id));
       }
     });
-
+    // updating changed todo task on blur
     eventUl.addEventListener('blur', (e) => {
       const bluredElement = e.target;
       if (bluredElement.className === 'todo-text') {
@@ -118,6 +120,13 @@ const view = {
         }
       }
     }, true);
+    // adding enter key to add button
+    const addButton = document.getElementById('add-todo-text-input');
+    addButton.addEventListener('keydown', (e) => {
+      if (e.keycode === 13 || e.which === 13) {
+        handlers.addTodo();
+      }
+    });
   }
 };
 
