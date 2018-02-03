@@ -35,6 +35,10 @@ const todoList = {
   }
 };
 
+const todoListControls = {
+  displayToggleAll: false
+};
+
 // display todos
 const handlers = {
   toggleAll: function() {
@@ -47,6 +51,7 @@ const handlers = {
     todoList.addTodo(addTodoTextInput.value);
     addTodoTextInput.value = '';
     view.displayTodos();
+    view.displayControls();
   },
   changeTodo: function(position, todoText) {
     todoList.changeTodo(position, todoText);
@@ -55,6 +60,7 @@ const handlers = {
   deleteTodo: function(position) {
     todoList.deleteTodo(position);
     view.displayTodos();
+    view.displayControls();
   },
   toggleCompleted : function(position) {
     todoList.toggleCompleted(position);
@@ -83,6 +89,18 @@ const view = {
       todoUl.appendChild(todoLi);
     });
   },
+  displayControls: function() {
+    const toggleAllButton = document.getElementById('toggle-all-todos');
+    // toggle all button
+    if (!todoListControls.displayToggleAll && todoList.todos.length > 1) {
+      toggleAllButton.classList.remove('hidden');
+      todoListControls.displayToggleAll = true;
+    } else if (todoListControls.displayToggleAll && todoList.todos.length < 2) {
+      toggleAllButton.classList.add('hidden');
+      todoListControls.displayToggleAll = false;
+    }
+
+  },
   createDeleteButton: function() {
     const deleteButton = document.createElement('button');
     deleteButton.innerText = 'Delete';
@@ -91,7 +109,7 @@ const view = {
   },
   createCompleteButton: function(complete) {
      const completeButton = document.createElement('button');
-     completeButton.innerText = complete
+     completeButton.innerText = complete;
      completeButton.classList.add('complete-button');
      return completeButton;
   },
