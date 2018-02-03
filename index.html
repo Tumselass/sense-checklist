@@ -1,38 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   <head>
-    <link rel="stylesheet" href="style.css">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css"> 
+    <title>zense checklist</title>
   </head>
 
   <body>
     <h1>Todo list</h1>
-  </body>
-  
-  <div>
-    <button onclick="handlers.toggleAll()">Toggle All</button>
-  </div>
-  
-  <div>
-    <button onclick="handlers.addTodo()">Add</button>
-    <input id="add-todo-text-input" type="text">
-  </div>
-  
-  <div>
-    <button onclick="handlers.changeTodo()">Change</button>
-    <input id="change-todo-position-input" type="number">
-    <input id="change-todo-text-input" type="text">
-  </div>
-  
-  <div>
-    <button onclick="handlers.toggleCompleted()">Completed</button>
-    <input id="toggle-completed-cosition-input" type="number">
-  </div>
-  
-  <ul>
+    <div>
+      <button onclick="handlers.toggleAll()">Toggle All</button>
+    </div>
+    <div>
+      <button id="add-todo" onclick="handlers.addTodo()">Add</button>
+      <input id="add-todo-text-input" type="text">
+    </div>
+    <ul>
+      <!-- todo items -->
+    </ul>
     
-  </ul>
-  
   <script src="script.js"></script>
+</body>
 </html>
