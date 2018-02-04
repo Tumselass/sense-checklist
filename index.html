@@ -5,26 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> 
     <title>zense checklist</title>
   </head>
 
   <body>
     <nav>Navbar</nav>
-    <main id="todo-list">
-      <h1>Todo list</h1>
-      <div>
-        <input id="add-todo-text-input" type="text" placeholder="Your item...">
-        <button id="add-todo" onclick="handlers.addTodo()">Add</button>
-      </div>
+    <main id="todo-list" class="card-3">
+      <header>
+        <h1 contenteditable="true">Todo list</h1>
+          <input id="add-todo-text-input" class="add-todo-text" type="text" placeholder="Your item...">
+          <button id="add-todo" class="btn add-button" onclick="handlers.addTodo()">+</button>
+      </header>
       <ul>
         <!-- todo items -->
       </ul>
-      <div id="todo-controls">
-        <button id="toggle-all-todos" class="hidden" onclick="handlers.toggleAll()">Toggle All</button>
-      </div>
+      <footer id="todo-controls">
+        <button id="toggle-all-todos" class="hidden btn text-btn" onclick="handlers.toggleAll()">Toggle All</button>
+        <button id="delete-all-todos" class="hidden btn text-btn" onclick="handlers.deleteAll()">Delete All</button>
+      </footer>
     </main>
-    
   <script src="script.js"></script>
 </body>
 </html>

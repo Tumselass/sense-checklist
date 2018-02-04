@@ -32,11 +32,15 @@ const todoList = {
     this.todos.forEach(todo => {
       totalTodos === completedTodos ? todo.completed = false : todo.completed = true;
     });
+  },
+  deleteAll: function() {
+    this.todos.length = 0;
   }
 };
 
 const todoListControls = {
-  displayToggleAll: false
+  displayToggleAll: false,
+  displayDeleteAll: false
 };
 
 // display todos
@@ -44,6 +48,12 @@ const handlers = {
   toggleAll: function() {
     todoList.toggleAll();
     view.displayTodos();
+    view.displayControls();
+  },
+  deleteAll: function() {
+    todoList.deleteAll();
+    view.displayTodos();
+    view.displayControls();
   },
   addTodo: function() {
     let addTodoTextInput = document.getElementById('add-todo-text-input');
@@ -65,6 +75,7 @@ const handlers = {
   toggleCompleted : function(position) {
     todoList.toggleCompleted(position);
     view.displayTodos();
+    view.displayControls();
   }
 };
 
@@ -72,15 +83,19 @@ const view = {
   displayTodos: function() {
     let todoUl = document.querySelector('ul');
     todoUl.innerHTML = '';
+
+    todoList.todos.sort((a, b) => (a.completed === b.completed) ? 0 : a.completed ? 1 : -1);
+
     todoList.todos.forEach((todo, index) => {
       let todoLi = document.createElement('li');
       let todoSpan = document.createElement('span');
       todoSpan.classList.add('todo-text');
-      todoSpan.setAttribute('contenteditable', 'true');
       if (todo.completed) {
-        todoLi.appendChild(this.createCompleteButton('X'));
+        todoLi.appendChild(this.createCompleteButton('marked-completed'));
+        todoSpan.classList.add('faded-text');
       } else {
-        todoLi.appendChild(this.createCompleteButton('-'));
+        todoLi.appendChild(this.createCompleteButton());
+        todoSpan.setAttribute('contenteditable', 'true');
       }
       todoLi.id = index;
       todoSpan.textContent = todo.todoText;
@@ -100,17 +115,27 @@ const view = {
       todoListControls.displayToggleAll = false;
     }
 
+    const deleteAllButton = document.getElementById('delete-all-todos')
+    let completedTodos = 0;
+    todoList.todos.forEach(todo => {
+      if (todo.completed) {
+        completedTodos++;
+      }
+    });
+    if ((completedTodos === todoList.todos.length) && todoList.todos.length > 1) {
+      deleteAllButton.classList.remove('hidden');
+    } else if ((completedTodos != todoList.todos.length) || todoList.todos.length < 2) {
+      deleteAllButton.classList.add('hidden');
+    }
   },
   createDeleteButton: function() {
     const deleteButton = document.createElement('button');
-    deleteButton.innerText = 'Delete';
-    deleteButton.classList.add('delete-button');                                 
+    deleteButton.classList.add('btn', 'delete-button', 'fas', 'fa-trash-alt');              
     return deleteButton;
   },
   createCompleteButton: function(complete) {
      const completeButton = document.createElement('button');
-     completeButton.innerText = complete;
-     completeButton.classList.add('complete-button');
+     completeButton.classList.add('btn', 'complete-button', 'fas', 'fa-check', complete);
      return completeButton;
   },
   eventListeners: function() {
@@ -118,10 +143,10 @@ const view = {
     const eventUl = document.querySelector('ul');
     eventUl.addEventListener('click', (e) => {
       const clickedElement = e.target;
-      if (clickedElement.className === 'delete-button') {
+      if (clickedElement.className.includes('delete-button')) {
         handlers.deleteTodo(parseInt(clickedElement.parentNode.id));
       }
-      if (clickedElement.className === 'complete-button') {
+      if (clickedElement.className.includes('complete-button')) {
         handlers.toggleCompleted(parseInt(clickedElement.parentNode.id));
       }
     });
