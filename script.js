@@ -1,6 +1,8 @@
 'use strict';
 
 const todoList = {
+  listName: '',
+  lastModified: null,
   todos: [],
   addTodo: function(todoText) {
     this.todos.push({
@@ -103,6 +105,7 @@ const view = {
       todoLi.appendChild(this.createDeleteButton());
       todoUl.appendChild(todoLi);
     });
+    document.getElementById('last-mod').innerText = this.setModifiedTime();
   },
   displayControls: function() {
     const toggleAllButton = document.getElementById('toggle-all-todos');
@@ -137,6 +140,13 @@ const view = {
      const completeButton = document.createElement('button');
      completeButton.classList.add('btn', 'complete-button', 'fas', 'fa-check', complete);
      return completeButton;
+  },
+  setModifiedTime: function() {
+    const modifiedTime = new Date();
+    const displayModifiedtime = modifiedTime.getHours() + ':' + modifiedTime.getMinutes();
+    document.getElementById('edited').classList.remove('hidden');
+    todoList.lastModified = modifiedTime;
+    return displayModifiedtime;
   },
   eventListeners: function() {
     // adding events to delete and completed button

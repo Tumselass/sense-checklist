@@ -70,6 +70,7 @@ ul {
   border: 1px solid var(--faded-btn-color);
   float: right;
   color: var(--faded-btn-color);
+  visibility: hidden;
   transition: font-size 0.3s cubic-bezier(0.15, 2.54, 0.58, 1),
               color 0.5s;  
 }
@@ -112,7 +113,7 @@ ul {
   font-size: 1.2rem;
   padding: 0.5rem;
   color: var(--text-color);
-  width: 90%;
+  width: 80%;
   border: 2px solid var(--faded-bg-color);
   border-top: none;
   border-right: none;
@@ -122,12 +123,25 @@ ul {
 .todo-text {
   font-size: 1.2rem;
   padding: 0.5rem;
+  width: 60%;
+  display: inline-block;
   color: var(--text-color);
 }
 
 li {
   border-bottom: 1px solid var(--faded-bg-color);
   padding: 1rem 0 1rem 0;
+}
+
+li:hover > button {
+  visibility: visible;
+}
+
+#edited {
+  font-style: italic;
+  float: right;
+  padding: 0.5rem 0 0.5rem 0;
+  color: var(--faded-btn-color);
 }
 
 header {
