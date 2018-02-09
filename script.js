@@ -10,6 +10,9 @@ const todoList = {
       completed: false
     });
   },
+  changeName: function(newName) {
+    this.todos.listName = newName;
+  },
   changeTodo: function(position, todoText) {
     this.todos[position].todoText = todoText;
   },
@@ -69,6 +72,10 @@ const handlers = {
     todoList.changeTodo(position, todoText);
     view.displayTodos();
   },
+  changeName: function(newName) {
+    todoList.changeName(newName);
+    view.displayTodos();
+  },
   deleteTodo: function(position) {
     todoList.deleteTodo(position);
     view.displayTodos();
@@ -80,6 +87,14 @@ const handlers = {
     view.displayControls();
   }
 };
+
+const settings = {
+  toggleMenu: function() {
+    const menu = document.getElementById('menu');
+    // menu.classList.toggle('d-none');
+    menu.classList.toggle('show-menu');
+  }
+}
 
 const view = {
   displayTodos: function() {
@@ -143,7 +158,11 @@ const view = {
   },
   setModifiedTime: function() {
     const modifiedTime = new Date();
-    const displayModifiedtime = modifiedTime.getHours() + ':' + modifiedTime.getMinutes();
+    let modHours = modifiedTime.getHours();
+    let modMinutes = modifiedTime.getMinutes();
+    if (modHours < 10) {modHours = '0' + modHours};
+    if (modMinutes < 10) {modMinutes = '0' + modMinutes};
+    const displayModifiedtime = modHours + ':' + modMinutes;
     document.getElementById('edited').classList.remove('hidden');
     todoList.lastModified = modifiedTime;
     return displayModifiedtime;
@@ -173,6 +192,26 @@ const view = {
         }
       }
     }, true);
+    // prevent multiline todos and blur on enter
+    const todoListContainer = document.getElementById('todo-list');
+    todoListContainer.addEventListener('keydown', (e) => {
+      if (e.target.id === 'list-name' || e.target.className === 'todo-text') {
+        if (e.keyCode === 13 || e.which === 13) {
+           e.preventDefault();
+          e.target.blur();
+        }
+      }
+    })
+    // updating list name on blur
+    const listNameInput = document.getElementById('list-name');
+    listNameInput.addEventListener('blur', (e) => {
+      const newListName = e.target.textContent;
+      if (newListName === todoList.todos.listName) {
+        return;
+      } else {
+        handlers.changeName(newListName);
+      }
+    })
     // adding enter key to add button
     const addButton = document.getElementById('add-todo-text-input');
     addButton.addEventListener('keydown', (e) => {

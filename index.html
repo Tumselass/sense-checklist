@@ -12,10 +12,17 @@
   </head>
 
   <body>
-    <nav>Navbar</nav>
-    <main id="todo-list" class="card-3">
+    <nav onclick="settings.toggleMenu()">Navbar</nav>
+    <div id="menu" class="">
+      <ul>
+        <li onclick="settings.toggleMenu()">Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+    </div> <!-- menu -->
+    <main id="todo-list" class="paper">
       <header>
-        <h1 contenteditable="true">Todo list</h1>
+        <h1 id="list-name" contenteditable="true">New list</h1>
           <input id="add-todo-text-input" class="add-todo-text" type="text" placeholder="Your item...">
           <button id="add-todo" class="btn add-button" onclick="handlers.addTodo()">+</button>
       </header>
