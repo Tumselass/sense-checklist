@@ -230,7 +230,7 @@ const animations = {
   deleteAnimation: function(callback, id) {
     const element = document.getElementById(id);
     element.addEventListener('animationend', () => {
-      callback(element);
+      callback(id);
     }, {once: true}); 
     element.classList.add('delete-animation');
   },
