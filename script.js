@@ -239,7 +239,7 @@ const animations = {
     element.addEventListener('animationend', () => {
       callback();
       element.classList.remove('delete-animation-all');
-    });
+    }, {once: true});
     element.classList.add('delete-animation-all');
   }
 };
