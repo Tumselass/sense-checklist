@@ -12,14 +12,30 @@
   </head>
 
   <body>
-    <nav onclick="settings.toggleMenu()">Navbar</nav>
-    <div id="menu" class="">
-      <ul>
-        <li onclick="settings.toggleMenu()">Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-      </ul>
-    </div> <!-- menu -->
+    <nav>
+      <div>
+        <button class="" onclick="settings.toggleMenu()"><i class="fas fa-bars hamburger-icon"></i></button>
+      </div>
+      <div>
+        zenSlist
+      </div>
+      <div>
+        <i class="far fa-list-alt"></i>
+      </div>
+        <div id="menu" class="hidden">
+          <button class="" onclick="settings.toggleMenu()"><i class="fas fa-times"></i></button>
+          <h3>Settings</h3>
+          <p>Theme</p>
+          <span id="theme-picker">
+            <span id="theme-1"></span>
+            <span id="theme-2"></span>
+            <span id="theme-3"></span> 
+          </span>
+          <p>Font size</p>
+          <input type="range" min="1" max="4" value="2" class="slider" id="myRange">   
+        </div> <!-- menu -->
+    </nav>
+    
     <main id="todo-list" class="paper">
       <header>
         <h1 id="list-name" contenteditable="true">New list</h1>
@@ -31,7 +47,7 @@
       </ul>
       <footer id="todo-controls">
         <button id="toggle-all-todos" class="hidden btn text-btn" onclick="handlers.toggleAll()">Toggle All</button>
-        <button id="delete-all-todos" class="hidden btn text-btn" onclick="handlers.deleteAll()">Delete All</button>
+        <button id="delete-all-todos" class="hidden btn text-btn" onclick="animations.deleteAllAnimation(handlers.deleteAll)">Delete All</button>
         <small id="edited" class="hidden">Edited: <span id="last-mod"></span></small>
       </footer>
     </main>

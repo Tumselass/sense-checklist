@@ -91,7 +91,7 @@ const handlers = {
 const settings = {
   toggleMenu: function() {
     const menu = document.getElementById('menu');
-    // menu.classList.toggle('d-none');
+    menu.classList.toggle('hidden');
     menu.classList.toggle('show-menu');
   }
 }
@@ -173,7 +173,7 @@ const view = {
     eventUl.addEventListener('click', (e) => {
       const clickedElement = e.target;
       if (clickedElement.className.includes('delete-button')) {
-        handlers.deleteTodo(parseInt(clickedElement.parentNode.id));
+        animations.deleteAnimation(handlers.deleteTodo, parseInt(clickedElement.parentNode.id));
       }
       if (clickedElement.className.includes('complete-button')) {
         handlers.toggleCompleted(parseInt(clickedElement.parentNode.id));
@@ -226,7 +226,23 @@ const view = {
 
 view.eventListeners();
 
-
+const animations = {
+  deleteAnimation: function(callback, id) {
+    const element = document.getElementById(id);
+    element.addEventListener('animationend', () => {
+      callback(element);
+    }, {once: true}); 
+    element.classList.add('delete-animation');
+  },
+  deleteAllAnimation: function(callback) {
+    const element = document.getElementById('todo-list');
+    element.addEventListener('animationend', () => {
+      callback();
+      element.classList.remove('delete-animation-all');
+    });
+    element.classList.add('delete-animation-all');
+  }
+};
 
 
 
