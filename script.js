@@ -93,6 +93,10 @@ const settings = {
     const menu = document.getElementById('menu');
     menu.classList.toggle('hidden');
     menu.classList.toggle('show-menu');
+  },
+  changeTheme: function(theme) {
+    const el = document.getElementById('app');
+    el.className = `color-theme-${theme}`;
   }
 }
 
@@ -244,7 +248,8 @@ const animations = {
   }
 };
 
-
+/* const declaration = document.styleSheets[2].rules[3].style;
+declaration.setProperty('background-color', 'var(--theme-3-nav-bg-color)'); */
 
 
 

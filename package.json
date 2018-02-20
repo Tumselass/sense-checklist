@@ -1,0 +1,25 @@
+{
+  "name": "zense-checklist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tumselass/zense-checklist.git"
+  },
+  "author": "thomas flunes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tumselass/zense-checklist/issues"
+  },
+  "homepage": "https://github.com/Tumselass/zense-checklist#readme",
+  "dependencies": {
+    "normalize.css": "^7.0.0"
+  }
+}
